@@ -16,9 +16,10 @@ function SearchPage() {
   const [{ term }, dispatch] = useStateValue();
 
   // Live API Call
-  // const { data } = useGoogleSearch(term);
+  const { data } = useGoogleSearch(term);
 
-  const data = Response;
+  // Mock API
+  // const data = Response;
 
   if (data) {
     console.log(data);
@@ -75,7 +76,37 @@ function SearchPage() {
           </div>
         </div>
       </div>
-      <div className="searchPage__results"></div>
+
+      {term && (
+        <div className="searchPage__results">
+          <p className="searchPage__resultcount">
+            About {data?.searchInformation.formattedTotalResults} results (
+            {data?.searchInformation.formattedSearchTime} seconds) for {term}
+          </p>
+
+          {data?.items.map((item) => {
+            return (
+              <div className="searchPage__result">
+                <a href={item.link}>
+                  {item.pagemap?.cse_image?.length > 0 &&
+                    item.pagemap?.cse_image[0]?.src && (
+                      <img
+                        className="searchPage__resultimg"
+                        src={item.pagemap?.cse_image[0]?.src}
+                        alt=""
+                      />
+                    )}
+                  {item.displayLink}
+                </a>
+                <a href={item.link} className="searchPage__result--title">
+                  <h2>{item.title}</h2>
+                </a>
+                <p className="searchPage__result--snippet">{item.snippet}</p>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
