@@ -22,7 +22,7 @@ function SearchPage() {
   // const data = Response;
 
   if (data) {
-    console.log(data);
+    // console.log(data);
   }
   return (
     <div className="searchPage">
@@ -84,9 +84,9 @@ function SearchPage() {
             {data?.searchInformation.formattedSearchTime} seconds) for {term}
           </p>
 
-          {data?.items.map((item) => {
+          {data?.items.map((item, index) => {
             return (
-              <div className="searchPage__result">
+              <div className="searchPage__result" key={index}>
                 <a href={item.link}>
                   {item.pagemap?.cse_image?.length > 0 &&
                     item.pagemap?.cse_image[0]?.src && (
